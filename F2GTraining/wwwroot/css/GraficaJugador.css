@@ -1,0 +1,138 @@
+﻿.graphic-all-zone {
+    display: flex;
+}
+
+.graphic-all-zone .canvas-zone {
+    width: 60%;
+    padding: 10px 0px 10px 0px;
+    height: 550px;
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(223,224,6,1) 100%);
+    border: 1px solid white;
+}
+
+.graphic-all-zone .canvas-zone div{
+    width: 100%;
+    height: 530px;
+}
+
+.graphic-all-zone .player-all-info {
+    width: 40%;
+    font-size: 20px;
+    border: 1px solid white;
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(221,137,19,1) 100%);
+}
+
+.graphic-all-zone .player-all-info h2{
+    text-align: center;
+    width: 90%;
+    font-size: 18px;
+    margin: 15px 0% 20px 0%;
+    background-color: white;
+    color: black;
+    padding: 10px 5% 10px 5%;
+}
+
+.graphic-all-zone .player-all-info .personal-info{
+    width: 90%;
+    margin: 20px 5% 10px 5%;
+}
+
+.graphic-all-zone .player-all-info .personal-info .double-info{
+    display: flex;
+    padding: 10px 5% 10px 5%;
+}
+
+.graphic-all-zone .player-all-info .personal-info .double-info label{
+    width: 40%;
+    margin: 0px 5% 0px 5%;
+}
+
+.graphic-all-zone .player-all-info .stats-info{
+    width: 90%;
+    margin-left: 5%;
+}
+
+.graphic-all-zone .player-all-info .stats-info .double-info{
+    display: flex;
+    padding: 10px 5% 10px 5%;
+}
+
+.graphic-all-zone .player-all-info .stats-info .double-info label{
+    width: 40%;
+    margin: 0px 5% 0px 5%;
+}
+
+button {
+    width: 90%;
+    margin: 11.25px 5% 11.25px 5%;
+    border: 1px solid black;
+    font-size: 18px;
+    border-radius: 100px;
+    padding: 15px;
+    color: black;
+    background-color: darkorange;
+    transition: background-color 0.4s;
+}
+
+button:hover {
+    color:darkorange;
+    background-color: #ffd548;
+}
+
+@media (max-width: 1300px){
+    .graphic-all-zone .player-all-info {
+        font-size: 15px;
+    }
+
+    .graphic-all-zone .player-all-info .stats-info{
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 950px){
+
+    .graphic-all-zone {
+        display: block;
+    }
+
+    .graphic-all-zone .player-all-info .stats-info{
+        margin-bottom: 0px;
+    }
+
+    .graphic-all-zone .canvas-zone {
+        width: 100%;
+    }
+
+    .graphic-all-zone .player-all-info {
+        width: 100%;
+    }
+
+    .contenedor-pagina {
+        height: 1200px;
+    }
+
+    button {
+        margin: 20px 5% 20px 5%;
+    }
+
+    .graphic-all-zone .player-all-info {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 555px){
+    .graphic-all-zone .canvas-zone {
+        height: 450px;
+    }
+
+    .graphic-all-zone .canvas-zone div{
+        height: 430px;
+    }
+
+    .graphic-all-zone .player-all-info {
+        font-size: 18px;
+    }
+
+    .contenedor-pagina {
+        height: 1100px;
+    }
+}

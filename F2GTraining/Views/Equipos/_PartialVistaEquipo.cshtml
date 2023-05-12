@@ -1,0 +1,11 @@
+﻿@model Equipo
+
+<div class="image-team" id="teamimage-@Model.IdEquipo">
+    <img src="~/images/equipos/@Model.Imagen" />
+</div>
+<div class="link-team-actions" id="teamaction-@Model.IdEquipo">
+    <a asp-controller="Entrenamientos" asp-action="ListaSesiones" asp-route-idequipo="@Model.IdEquipo" class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>
+    <a asp-controller="Jugadores" asp-action="CrearJugador" asp-route-idequipo="@Model.IdEquipo" class="minibutton-teamview">AÑADIR NUEVO JUGADOR</a>
+    <a asp-controller="Equipos" asp-action="CrearEquipo" class="minibutton-teamview">NUEVO EQUIPO</a>
+</div>
+

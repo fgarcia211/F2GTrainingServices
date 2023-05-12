@@ -1,0 +1,156 @@
+﻿@model Jugador
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+    EstadisticaJugador stats = ViewData["ESTADISTICAS"] as EstadisticaJugador;
+
+    List<string> etiquetas = new List<string>();
+    List<int> valores = new List<int>();
+
+    int tiroparada = (stats.TiroGKParada != null && stats.TotalTiroGKParada != null) ? stats.TiroGKParada.Value / stats.TotalTiroGKParada.Value : 0;
+    int pasesaque = (stats.PaseGKSaque != null && stats.TotalPaseGKSaque != null) ? stats.PaseGKSaque.Value / stats.TotalPaseGKSaque.Value : 0;
+    int regatereflejo = (stats.RegateGKReflejo != null && stats.TotalRegateGKReflejo != null) ? stats.RegateGKReflejo.Value / stats.TotalRegateGKReflejo.Value : 0;
+    int defensavelocidad = (stats.DefensaGKVelocidad != null && stats.TotalDefensaGKVelocidad != null) ? stats.DefensaGKVelocidad.Value / stats.TotalDefensaGKVelocidad.Value : 0;
+    int ritmosalto = (stats.RitmoGKSalto != null && stats.TotalRitmoGKSalto != null) ? stats.RitmoGKSalto.Value / stats.TotalRitmoGKSalto.Value : 0;
+    int fisicoposicion = (stats.FisicoGKPosicion != null && stats.TotalFisicoGKPosicion != null) ? stats.FisicoGKPosicion.Value / stats.TotalFisicoGKPosicion.Value : 0;
+
+    valores.Add(ritmosalto);
+    valores.Add(tiroparada);
+    valores.Add(pasesaque);
+    valores.Add(regatereflejo);
+    valores.Add(defensavelocidad);
+    valores.Add(fisicoposicion);
+
+    if (Model.IdPosicion != 1)
+    {
+        etiquetas.Add("Ritmo");
+        etiquetas.Add("Tiro");
+        etiquetas.Add("Pase");
+        etiquetas.Add("Regate");
+        etiquetas.Add("Defensa");
+        etiquetas.Add("Fisico");
+    }
+    else
+    {
+        etiquetas.Add("Salto");
+        etiquetas.Add("Parada");
+        etiquetas.Add("Saque");
+        etiquetas.Add("Reflejos");
+        etiquetas.Add("Reaccion");
+        etiquetas.Add("Posicion");
+    }
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/graficajugador.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/highcharts.js"></script>
+    <script src="~/js/graficajugador.js" asp-append-version="true"></script>
+
+    <script>
+        $(function() {
+            var jsonEtiquetas = '@Json.Serialize(etiquetas)';
+            var jsonValores = '@Json.Serialize(valores)';
+
+            cargaGrafica(JSON.parse(jsonEtiquetas), JSON.parse(jsonValores));
+        });
+    </script>
+
+}
+
+<div class="graphic-all-zone">
+    <div class="canvas-zone">
+        <div id="graf-player"></div>
+    </div>
+    <div class="player-all-info">
+        <h2>JUGADOR: @Model.Nombre.ToUpper()</h2>
+        <div class="personal-info">
+            <div class="double-info">
+                @if (Model.Dorsal != 0)
+                {
+                    <label>DORSAL: @Model.Dorsal</label>
+                }
+                else
+                {
+                    <label>DORSAL: N/A</label>
+                }
+                @if (Model.Edad != 0)
+                {
+                    <label>EDAD: @Model.Edad</label>
+                }
+                else
+                {
+                    <label>EDAD: N/A</label>
+                }
+            </div>
+            <div class="double-info">
+                @if (Model.Peso != 0)
+                {
+                    <label>PESO: @Model.Peso KG</label>
+                }
+                else
+                {
+                    <label>PESO: N/A</label>
+                }
+                @if (Model.Altura != 0)
+                {
+                    <label>ALTURA: @Model.Altura CM</label>
+                }
+                else
+                {
+                    <label>ALTURA: N/A</label>
+                }
+            </div>
+        </div>
+        <h2>PUNTUACION DE ESTADISTICAS</h2>
+        <div class="stats-info">
+            <div class="double-info">
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>PARADA: @tiroparada</label>
+                    <label>SAQUE: @pasesaque</label>
+                }
+                else
+                {
+                    <label>TIRO: @tiroparada</label>
+                    <label>PASE: @pasesaque</label>
+                }
+            </div>
+            <div class="double-info">
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>REFLEJOS: @regatereflejo</label>
+                    <label>REACCION: @defensavelocidad</label>
+                }
+                else
+                {
+                    <label>REGATE: @regatereflejo</label>
+                    <label>DEFENSA: @defensavelocidad</label>
+                }
+            </div>
+            <div class="double-info">
+                @if (Model.IdPosicion == 1)
+                {
+                    <label>SALTO: @ritmosalto</label>
+                    <label>POSICION: @fisicoposicion</label>
+                }
+                else
+                {
+                    <label>RITMO: @ritmosalto</label>
+                    <label>FISICO: @fisicoposicion</label>
+                }
+            </div>
+        </div>
+        <button onclick='descargaInforme(@Model.IdJugador)'>DESCARGAR INFORME</button>
+        <button onclick="vuelveInicio()">VOLVER A MIS EQUIPOS</button>
+    </div>
+</div>

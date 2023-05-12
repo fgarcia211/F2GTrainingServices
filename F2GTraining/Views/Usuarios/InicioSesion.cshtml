@@ -1,0 +1,47 @@
+﻿@section CSSLinks{
+    <link rel="stylesheet" href="~/css/iniciosesion.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="login-section">
+        <a asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+    </div>
+}
+
+<div class="title-login">
+    <img src="~/images/logoapp.png" />
+</div>
+
+<div class="login-form-container">
+    <div class="login-form">
+        <form method="post">
+            <div class="input-zone">
+                <label>NOMBRE DE USUARIO</label>
+                <input type="text" name="usuario" required/>
+            </div>
+            <div class="input-zone">
+                <label>CONTRASEÑA</label>
+                <input type="password" name="contrasenha" required/>
+            </div>
+            @if (TempData["MENSAJE"] != null)
+            {
+            <p class="message-tempdata">@TempData["MENSAJE"]</p>
+            }
+            @if (ViewData["ERROR"] != null)
+            {
+            <p class="error-viewdata">@ViewData["ERROR"]</p>
+            }
+            <button>Iniciar Sesion</button>
+        </form>
+    </div>
+    <div class="login-app-container">
+        <img src="~/images/logoapp.png" />
+        <div class="login-app-info">
+            <ul>
+                <li>Controla hasta un máximo de 5 equipos</li>
+                <li>Crea sesiones de entrenamiento para tus jugadores</li>
+                <li>Lleva un control de las estadísticas en los entrenamientos</li>
+            </ul>
+        </div>
+    </div>
+</div>

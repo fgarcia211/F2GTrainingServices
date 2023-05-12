@@ -1,0 +1,187 @@
+﻿.view-sessions-zone {
+    width: 80%;
+    margin: 20px 10% 20px 10%;
+}
+
+.view-sessions-zone .team-title {
+    background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(177,124,251,1) 100%);
+    padding: 20px 0px 20px 0px;
+    border: 1px solid white;
+}
+
+.view-sessions-zone .team-title p {
+    text-align: center;
+    font-size: 27px;
+}
+
+.view-sessions-zone .sessions-site {
+    background-color: white;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.view-sessions-zone .sessions-site p{
+    margin-top: 115px;
+    font-size: 70px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+
+.view-sessions-zone .sessions-site .session-name {
+    background: linear-gradient(0deg, rgba(87,58,121,1) 0%, rgba(210,188,241,1) 100%);
+    color: #32216A;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+    font-size: 16px;
+    transition: opacity linear 0.2s;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.view-sessions-zone .sessions-site .session-name:hover {
+    opacity: 0.8
+}
+
+.view-sessions-zone .sessions-site .session-options {
+    background-color: #CFC0FF;
+    padding: 15px 0px 15px 0px;
+    border-right: 1px solid white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid white;
+    display: none;
+}
+
+.view-sessions-zone .sessions-site .session-options button{
+    background-color: black;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 1px solid white;
+    width: 39%;
+    margin: 0px 5% 0px 5%;
+    transition: background-color linear 0.15s;
+    cursor: pointer;
+}
+
+.view-sessions-zone .sessions-site .session-options button:hover{
+    background-color: #6B54B4;
+}
+
+.view-sessions-zone .sessions-site .session-options button.finishbutton{
+    width: 50%;
+    margin: 0px 25% 0px 25%;
+}
+
+.view-sessions-zone .border-sessions {
+    background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(177,124,251,1) 100%);
+    border: 1px solid white;
+    padding: 30px 0px 30px 0px;
+}
+
+.view-sessions-zone .button-zone {
+    display: flex;
+}
+
+.view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+    width: 40%;
+    margin: 50px 5% 10px 5%;
+    border: 1px solid black;
+    font-size: 20px;
+    border-radius: 100px;
+    padding: 15px;
+    color: white;
+    background-color: mediumpurple;
+    transition: background-color 0.5s;
+    cursor: pointer;
+}
+
+.view-sessions-zone .button-zone button.back-button:hover, .view-sessions-zone .button-zone button.new-session:hover {
+    color:rebeccapurple;
+    background-color: #C1B3EE;
+}
+
+.swal2-popup {
+    border: 1px solid #C1B3EE !important;
+}
+
+.swal2-container {
+    height: 810px !important;
+}
+
+
+@media (max-width: 940px) {
+    .view-sessions-zone .sessions-site p {
+        font-size: 55px;
+    }
+
+    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+        font-size: 16px;
+    }
+
+    .view-sessions-zone .team-title p {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 710px){
+    .swal2-container {
+        height: 870px !important;
+    }
+
+    .swal2-popup {
+        width: 90% !important;
+    }
+
+    .view-sessions-zone .sessions-site p {
+        font-size: 36px;
+    }
+
+    .view-sessions-zone .team-title p {
+        font-size: 17px;
+    }
+
+    .view-sessions-zone .border-sessions {
+        padding: 20px 0px 20px 0px;
+    }
+
+    .view-sessions-zone .button-zone {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+        width: 90%;
+        margin: 10px 5% 10px 5%;
+        border: 1px solid black;
+        font-size: 19px;
+        border-radius: 100px;
+        padding: 15px;
+        color: white;
+        background-color: mediumpurple;
+        transition: background-color 0.5s;
+        cursor: pointer;
+    }
+
+    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .view-sessions-zone .sessions-site .session-name {
+        font-size: 12px;
+    }
+
+    .view-sessions-zone .sessions-site .session-options {
+        padding: 8px 0px 8px 0px;
+    }
+
+    .view-sessions-zone .sessions-site .session-options button {
+        font-size: 10px;
+    }
+}
+

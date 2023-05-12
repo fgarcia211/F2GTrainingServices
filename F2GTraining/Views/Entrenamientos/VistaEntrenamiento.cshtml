@@ -1,0 +1,342 @@
+﻿@model Entrenamiento
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+    List<Jugador> jugadores;
+    List<JugadorEntrenamiento> notas;
+
+    if (ViewData["JUGADORES"] != null)
+    {
+        jugadores = ViewData["JUGADORES"] as List<Jugador>;
+    }
+    else
+    {
+        jugadores = new List<Jugador>();
+    }
+
+    if (ViewData["NOTAS"] != null)
+    {
+        notas = ViewData["NOTAS"] as List<JugadorEntrenamiento>;
+    }
+    else
+    {
+        notas = new List<JugadorEntrenamiento>();
+    }
+
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/vistaentrenamiento.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
+    <script src="~/js/vistaentrenamiento.js" asp-append-version="true"></script>
+
+    @if (Model.Activo)
+    {
+        <script>
+            $(document).ready(function() {
+                iniciarEntrenamiento(
+                    [
+                        @Model.FechaInicio.Value.Year,
+                        @Model.FechaInicio.Value.Month,
+                        @Model.FechaInicio.Value.Day,
+                        @Model.FechaInicio.Value.Hour,
+                        @Model.FechaInicio.Value.Minute,
+                        @Model.FechaInicio.Value.Second,
+                        @Model.FechaInicio.Value.Millisecond
+                    ]
+                );
+            });
+        </script>
+    }
+
+    @if (Model.FechaFin != null)
+    {
+        <script>
+            $(document).ready(function () {
+                mostrarDuracion(
+                    [
+                        @Model.FechaInicio.Value.Year,
+                        @Model.FechaInicio.Value.Month,
+                        @Model.FechaInicio.Value.Day,
+                        @Model.FechaInicio.Value.Hour,
+                        @Model.FechaInicio.Value.Minute,
+                        @Model.FechaInicio.Value.Second,
+                        @Model.FechaInicio.Value.Millisecond
+                    ],
+                    [
+                        @Model.FechaFin.Value.Year,
+                        @Model.FechaFin.Value.Month,
+                        @Model.FechaFin.Value.Day,
+                        @Model.FechaFin.Value.Hour,
+                        @Model.FechaFin.Value.Minute,
+                        @Model.FechaFin.Value.Second,
+                        @Model.FechaFin.Value.Millisecond
+                    ]
+                );
+            });
+        </script>
+    }
+}
+<form method="post">
+    <input type="hidden" name="idequipo" value="@ViewData["IDEQUIPO"]"/>
+    <input type="hidden" name="identrenamiento" value="@Model.Id"/>
+    <div class="session-info-view">
+        <div class="player-section">
+            <div class="player-title">
+                <p>JUGADORES DISPONIBLES</p>
+            </div>
+            <div class="player-site">
+                @if (!(Model.Activo) && Model.FechaInicio == null)
+                {
+                    @foreach (Jugador jug in jugadores)
+                    {
+                        <div class="player">
+                            <p>@jug.Nombre.ToUpper()</p>
+                            <input type="checkbox" name="seleccionados" value="@jug.IdJugador"/>
+                        </div>
+                    }
+                }
+                else if(Model.Activo && Model.FechaFin == null)
+                {
+                    @foreach (Jugador jug in jugadores)
+                    {
+                        <input type="hidden" name="seleccionados" value="@jug.IdJugador"/>
+                        <div class="player-started">
+                            <p>@jug.Nombre.ToUpper()</p>
+                        </div>
+                        <div class="player-stats">
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>RITMO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SALTO:</label>
+                                    }                                   
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>TIRO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>PARADA:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i = 0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>PASE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SAQUE:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>REGATE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REFLEJOS:</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>DEFENSA:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REACCION</label>
+                                    }
+                                    <select name="valoraciones">
+                                        @for (int i = 0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-zone">
+                                    @if (jug.IdPosicion != 1)
+                                    {
+                                        <label>FISICO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>POSICION</label>
+                                    }  
+                                    <select name="valoraciones">
+                                        @for (int i=0; i < 11; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }else if(!(Model.Activo) && Model.FechaFin != null)
+                {
+                    @for (int i=0; i < jugadores.Count; i++)
+                    {
+                        <div class="player-started">
+                            <p>@jugadores[i].Nombre.ToUpper()</p>
+                        </div>
+                        <div class="player-stats">
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>RITMO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SALTO:</label>
+                                    }
+                                    <input type="number" value="@notas[i].RitmoGKSalto.Value" disabled>
+                                </div>
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>TIRO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>PARADA:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].TiroGKParada.Value">
+                                </div>
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>PASE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>SAQUE:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].PaseGKSaque.Value">
+                                </div>
+                            </div>
+                            <div class="triple-input">
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>REGATE:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REFLEJOS:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].RegateGKReflejo.Value">
+                                </div>
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>DEFENSA:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>REACCION:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].DefensaGKVelocidad.Value">
+                                </div>
+                                <div class="input-zone">
+                                    @if (jugadores[i].IdPosicion != 1)
+                                    {
+                                        <label>FISICO:</label>
+                                    }
+                                    else
+                                    {
+                                        <label>POSICION:</label>
+                                    }
+                                    <input type="number" disabled value="@notas[i].FisicoGKPosicion.Value">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }  
+            </div>
+            <div class="player-border"></div>
+        </div>
+        <div class="session-section">
+            <div class="session-title">
+                <p>@Model.Nombre</p>
+            </div>
+            <div class="session-site">
+                <div class="session-buttons">
+                    @if (Model.Activo && Model.FechaFin == null)
+                    {
+                        <button type="submit">FINALIZAR SESION</button>
+                    }
+                    else if (!(Model.Activo) && Model.FechaInicio == null)
+                    {
+                        <button type="button" onclick="compruebaJugadores()">INICIAR SESION</button>
+                    }
+                    <button type="button" onclick="location.href='@Url.Action("ListaSesiones", "Entrenamientos", new { idequipo = ViewData["IDEQUIPO"]})'">VOLVER A SESIONES</button>
+                </div>
+                <div class="session-info">
+                    @if (!(Model.Activo) && Model.FechaInicio == null)
+                    {
+                        <p>Selecciona los jugadores que participarán en la sesión y pulsa "INICIAR SESION"</p>
+                    }
+                    else if (Model.Activo && Model.FechaFin == null)
+                    {
+                        <p>Asigna las notas a cada jugador (Un 0 no contará para las estadísticas) y pulsa en "FINALIZAR SESION"</p>
+                    }
+                    else if (!(Model.Activo) && Model.FechaFin != null)
+                    {
+                        <p>Sesion finalizada correctamente. Puedes volver a las sesiones</p>
+                    }              
+                </div>
+                <div class="session-timer">
+                    <p>00:00:00</p>
+                </div>
+            </div>
+            <div class="session-border"></div>
+        </div>
+    </div>
+</form>

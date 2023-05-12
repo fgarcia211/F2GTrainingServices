@@ -1,0 +1,41 @@
+﻿@section CSSLinks{
+    <link rel="stylesheet" href="~/css/registrousuario.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo {
+    <div class="login-section">
+        <a asp-controller="Usuarios" asp-action="InicioSesion">Volver a login</a>
+    </div>
+}
+
+<div class="advice-register">
+    <p>El nombre de usuario debe tener menos de 16 caracteres</p>
+    <p>La contraseña debe tener un mínimo de 8 caracteres</p>
+</div>
+
+<form method="post">
+    <div class="double-input">
+        <div class="input-zone">
+            <label>NOMBRE DE USUARIO</label>
+            <input type="text" name="usuario" required/>
+        </div>
+        <div class="input-zone">
+            <label>TELÉFONO</label>
+            <input type="number" name="telefono" min="100000000" required/>
+        </div>
+    </div>
+    <div class="double-input">
+        <div class="input-zone">
+            <label>CORREO ELECTRONICO</label>
+            <input type="email" name="correo" required/>
+        </div>
+        <div class="input-zone">
+            <label>CONTRASEÑA</label>
+            <input type="password" name="contrasenha" required/>
+        </div>
+    </div>
+    <div class="check-zone">
+        <p>@ViewData["ERROR"]</p>
+        <button>Registrarse</button>
+    </div>  
+</form>

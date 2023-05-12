@@ -1,0 +1,73 @@
+﻿@model List<Entrenamiento>
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/listasesiones.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true"/>
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
+    <script src="~/js/listasesiones.js" asp-append-version="true"></script>
+}
+
+<div class="view-sessions-zone">
+    <div class="team-title">
+        <p>SESIONES DE ENTRENAMIENTO: @ViewData["NOMBREEQUIPO"]</p>
+    </div>
+    <div class="sessions-site">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (Entrenamiento entre in Model)
+            {
+                <div class="session-name" onclick="muestraOpciones(@entre.Id)">
+                    @if (entre.FechaFin == null)
+                    {
+                        <span>@entre.Nombre</span>
+                    }
+                    else
+                    {
+                        <span>@entre.Nombre - FINALIZADA</span>
+                    }
+                    
+                </div>
+                <div class="session-options" id="sessionopt-@entre.Id">
+                    @if (entre.FechaFin == null)
+                    {
+                        <button onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { identrenamiento = entre.Id, idequipo = entre.IdEquipo })'">VER SESION</button>
+                        <button onclick="location.href='@Url.Action("EliminaEntrenamiento", "Entrenamientos", new { identrenamiento = entre.Id, idequipo = entre.IdEquipo })'">BORRAR SESION</button>
+                    }
+                    else
+                    {
+                        <button class="finishbutton" onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { identrenamiento = entre.Id, idequipo = entre.IdEquipo })'">VER SESION</button>
+                    }
+                </div>
+            }
+            
+        }
+        else
+        {
+            <p>SIN SESIONES</p>
+        }
+    </div>
+    <div class="border-sessions"></div>
+    <div class="button-zone">
+        <button onclick="vuelveInicio()" class="back-button">VOLVER</button>
+        <button onclick="crearSesion(@ViewData["IDEQUIPO"])" class="new-session">CREAR ENTRENAMIENTO</button>
+    </div>
+</div>
+
+<form id='form-new-team' method="post"> 
+  <input type="hidden" id="inputnombre" name="nombre" value="">
+  <input type="hidden" id="inputequipo" name="idequipo" value="@ViewData["IDEQUIPO"]">
+</form>

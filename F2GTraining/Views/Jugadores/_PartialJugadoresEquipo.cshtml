@@ -1,0 +1,81 @@
+﻿@model List<Jugador>
+
+@{
+    List<int> idportero = new List<int>(new int[] {1});
+    List<int> iddefensa = new List<int>(new int[] {2,3,4,5});
+    List<int> idmedios = new List<int>(new int[] {6,7,8,9,10});
+    List<int> iddelanteros = new List<int>(new int[] {11,12,13,14});
+
+    string controllerPlayer = "Jugadores";
+
+    string actionShowPlayer = "GraficaJugador";
+    string actionDeletePlayer = "DeleteJugador";
+}
+
+@if (Model != null && Model.Count != 0)
+{
+    <div class="player-goalkeeper">
+        <div class="title-position">PORTEROS</div>
+        @foreach (Jugador jug in Model)
+        {
+            @if (idportero.Contains(jug.IdPosicion))
+            {
+                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
+                </div>
+            }
+
+        }
+    </div>
+    <div class="player-defense">
+        <div class="title-position">DEFENSAS</div>
+        @foreach (Jugador jug in Model)
+        {
+            @if (iddefensa.Contains(jug.IdPosicion))
+            {
+                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
+                </div>
+            }
+
+        }
+    </div>
+    <div class="player-midfield">
+        <div class="title-position">MEDIOCENTROS</div>
+        @foreach (Jugador jug in Model)
+        {
+            @if (idmedios.Contains(jug.IdPosicion))
+            {
+                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
+                </div>
+            }
+
+        }
+    </div>
+    <div class="player-striker">
+        <div class="title-position">DELANTEROS</div>
+        @foreach (Jugador jug in Model)
+        {
+            @if (iddelanteros.Contains(jug.IdPosicion))
+            {
+                <div class="player" id="player-@jug.IdJugador" onclick="muestraOpciones(@jug.IdJugador)" data-idequipo="@jug.IdEquipo">@jug.Nombre</div>
+                <div class="options-player" id="optplayer-@jug.IdJugador" style="display: none">
+                    <button onclick="location.href='@Url.Action(actionShowPlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">VER GRAFICA</button>
+                    <button onclick="location.href='@Url.Action(actionDeletePlayer, controllerPlayer, new { idjugador = jug.IdJugador})'">ELIMINAR JUGADOR</button>
+                </div>
+            }
+
+        }
+    </div>
+}
+else
+{
+    <p style="color:black">SIN JUGADORES</p>
+}

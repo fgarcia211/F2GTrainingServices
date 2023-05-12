@@ -1,0 +1,79 @@
+﻿@model List<Posicion>
+
+@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/crearjugador.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/crearjugador.js" asp-append-version="true"></script>
+}
+
+<div class="show-team">
+    <p>Jugador para equipo: @ViewData["NOMBRE"]</p>
+</div>
+
+<div class="form-register-zone">
+<form method="post">
+    <div class="input-site">
+        <div class="inputs-required-zone">
+            <div class="title-input-zone">
+                <p>PARAMETROS OBLIGATORIOS</p>
+            </div>
+            <div class="input-required">
+                <label>POSICION</label>
+                <select name="idposicion" required>
+                    @foreach (Posicion pos in Model){
+                        <option value="@pos.IdPosicion">@pos.Nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="input-required">
+                <label>NOMBRE</label>
+                <input type="text" name="nombre" required/>
+            </div>
+        </div>
+
+        <div class="inputs-optional-zone">
+            <div class="title-input-zone">
+                <p>PARAMETROS OPCIONALES</p>
+            </div>
+            <div class="inputs-opt-zone">
+                <div class="double-input">
+                    <div class="input-optional">
+                        <label>DORSAL</label>
+                        <input type="number" min="1" name="dorsal"/>
+                    </div>
+                    <div class="input-optional">
+                        <label>EDAD</label>
+                        <input type="number" min="1" name="edad"/>
+                    </div>
+                </div>
+                <div class="double-input">
+                    <div class="input-optional">
+                        <label>PESO (KG)</label>
+                        <input type="number" min="1" name="peso"/>
+                    </div>
+                    <div class="input-optional">
+                        <label>ALTURA (CM)</label>
+                        <input type="number" min="1" name="altura"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit">CREAR JUGADOR</button>
+    <button class="back-button" type="button" onclick="vuelveInicio()">VOLVER</button>
+</form>
+</div>
+

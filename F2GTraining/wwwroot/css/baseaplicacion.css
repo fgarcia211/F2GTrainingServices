@@ -1,0 +1,131 @@
+/*CSS TODOS LOS ELEMENTOS*/
+@font-face {
+    font-family: fuentePagina;
+    src: url(/fonts/iceberg.ttf);
+}
+
+* {
+    font-family: fuentePagina;
+    margin: 0px;
+    padding: 0px;
+}
+/*FIN CSS TODOS LOS ELEMENTOS*/
+
+/*CSS HEADER PAGINA*/
+.header-pagina {
+    display: flex;
+    background-color: black;
+    color: white;
+    padding: 10px 5% 10px 5%;
+    width: 90%;
+}
+
+.header-pagina .name-app {
+    font-size: 44px;
+    width: 55%;
+    text-shadow: 1px 1px 2px black, 0 0 25px lime, 0 0 5px darkgreen;
+}
+
+.header-pagina .login-section {
+    height: 50px;
+    width: 27.5%;
+    margin-left: 17.5%;
+    font-size: 22px;
+    padding-top: 15.5px;
+    text-align: center;
+    box-shadow: 0px 0px 15px #00FF00;
+    border: 1px solid white;
+}
+
+.login-section a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.4s;
+    text-shadow: 1px 1px 2px black, 0 0 25px lime, 0 0 5px darkgreen;
+}
+
+.login-section a:hover {
+    color: aquamarine;
+}
+
+.header-pagina .user-section {
+    height: 50px;
+    width: 27.5%;
+    margin-left: 17.5%;
+    font-size: 15px;
+    padding-top: 7.5px;
+    text-align: center;
+    box-shadow: 0px 0px 15px #00FF00;
+    border: 1px solid white;
+}
+
+.user-section p {
+    margin-bottom: 5px;
+}
+
+.user-section a {
+    text-decoration: none;
+    color: aquamarine;
+    transition: color 0.4s;
+    text-shadow: 1px 1px 2px black, 0 0 25px lime, 0 0 5px darkgreen;
+}
+
+.user-section a:hover {
+    color: white;
+}
+/*FIN CSS HEADER PAGINA*/
+
+/*CSS FOOTER PAGINA*/
+
+.footer-pagina {
+    text-align: center;
+    font-size: 35px;
+    background-color: black;
+    color: white;
+    padding: 20px 5% 20px 5%;
+    width: 90%;
+    text-shadow: 1px 1px 2px black, 0 0 25px lime, 0 0 5px darkgreen;
+}
+
+/*FIN CSS FOOTER PAGINA*/
+
+/*CSS CONTENEDOR PAGINA*/
+
+.contenedor-pagina {
+    background: linear-gradient(180deg, #767676 8.58%, #406C34 18.57%, #23351E 58.77%, #212B1F 87.03%);
+    color: white;
+    height: 610px;
+    padding: 20px 5% 20px 5%;
+}
+/*FIN CSS CONTENEDOR PAGINA*/
+
+@media (max-width: 710px) {
+    
+    .header-pagina {
+        display: block;
+        padding-bottom:20px;
+    }
+
+    .header-pagina .user-section {
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 0%;
+    }
+
+    .header-pagina .name-app {
+        width: 100%;
+        font-size: 40px;
+        text-align: center;
+
+    }
+
+    .header-pagina .login-section {
+        width: 100%;
+        margin-left: 0%;
+        margin-top: 25px;
+    }
+
+    .footer-pagina {
+        font-size: 23px;
+    }
+}

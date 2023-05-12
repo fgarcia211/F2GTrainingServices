@@ -1,0 +1,51 @@
+﻿@{
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+
+    string controllerNewTeam = "Equipos";
+    string actionNewTeam = "CrearEquipo";
+}
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/registroequipo.css" asp-append-version="true"/>
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/registroequipo.js" asp-append-version="true"></script>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-new-team">
+        <div class="input-zone">
+            <label>NOMBRE DE EQUIPO</label>
+            <input type="text" name="nombre" required/>
+        </div>
+        <div class="input-zone">
+            <label>
+                SELECCIONAR IMAGEN
+                <input id="inputimagen" type="file" name="imagen" onchange="muestraArchivoSubido()" required/>
+            </label>
+        </div>
+    </div>
+    <div class="check-zone">
+        @if (ViewData["ERROR"] != null)
+        {
+            <p id="image-info" style="color: red">@ViewData["ERROR"]</p>
+        }
+        else
+        {
+            //INTENTAR PONER RECOMENDACION AQUI
+            @*<p style="color: yellowgreen">Recomendamos subir logos de imagen con formato .png transparente y de mismo ancho y altura para una mayor experiencia visual</p>*@
+            <p id="image-info">Para registrar el equipo, selecciona una imagen (Solo formato .png)</p>
+        }
+    </div>
+    <button type="submit">CREAR EQUIPO</button>
+    <button class="back-button" type="button" onclick="vuelveInicio()">VOLVER</button>
+</form>
+

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FUT TRAINING F2G</title>
+    <link rel="stylesheet" href="~/css/baseaplicacion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/F2GTraining.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("CSSLinks", required: false)
+    <script src="~/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</head>
+<body>
+
+    <header>
+        <div class="header-pagina">
+            <div class="name-app">
+                <p>FUT TRAINING F2G</p>
+            </div>
+            @await RenderSectionAsync("ZonaLogueo", required: false)
+        </div>
+    </header>
+
+    <div class="contenedor-pagina">
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="footer-pagina">
+        <p>App creada por: F2G-COMPANY</p>
+    </div>
+
+</body>
+</html>

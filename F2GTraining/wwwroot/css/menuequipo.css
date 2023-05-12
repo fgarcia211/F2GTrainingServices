@@ -1,0 +1,358 @@
+﻿.teamview-menu {
+    display: flex;
+    padding: 20px 0px 20px 0px;
+}
+
+.teamview-menu .team-section {
+    width: 30%;
+    max-height: 550px;
+    text-align: center;
+    margin-left: 5%;
+}
+
+.teamview-menu .team-section:has(.newteam-container) {
+    width: 100%;
+    text-align: center;
+    margin-left: 0%;
+}
+
+.newteam-container .info-newteam{
+    margin: 40px 0px 40px 0px;
+    font-size: 36px;
+}
+
+.newteam-container button {
+    border: 1px solid black;
+    border-radius: 100px;
+    padding: 20px;
+    width: 30%;
+    background-color: lightgreen;
+    font-weight: bold;
+    margin-top: 150px;
+    font-size: 26px;
+    cursor: pointer;
+    transition: background-color linear 0.2s;
+}
+
+.newteam-container button:hover {
+    color: white;
+    background-color: green;
+}
+
+.team-section p {
+    font-size:28px;
+    letter-spacing: 1px;
+}
+
+.team-section select {
+    margin-top:15px;
+    width: 75%;
+    padding: 10px;
+    border: none;
+    border-radius: 100px;
+    appearance: none;
+    text-align: center;
+    margin-bottom: 15px
+}
+
+.team-section div.image-team img {
+    height: 300px;
+    width: 70%;
+}
+
+.team-section div.link-team-actions {
+    width: 96%;
+    padding: 0px 2% 0px 2%;
+    display: grid;
+}
+
+.team-section div.link-team-actions a.minibutton-teamview {
+    background-color: #53B12D;
+    width: 78%;
+    margin-top: 10px;
+    margin-left: 10%;
+    text-decoration: none;
+    padding: 10px 2% 10px 2%;
+    border-radius: 100px;
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
+    transition: background-color linear 0.2s;
+}
+
+.team-section div.link-team-actions a.minibutton-teamview:hover {
+    background-color: green;
+}
+
+.teamview-menu .player-section {
+    border: 1px solid white;
+    max-height: 550px;
+    margin-left: 5%;
+    height: 550px;
+    width: 60%;
+}
+
+.teamview-menu .player-section .border-section{
+    background-color: black;
+    padding: 20px 0px 20px 0px;
+    width: 100%;
+}
+
+.teamview-menu .player-section .player-zone {
+    height: 470px;
+    background-color: white;
+    overflow-y: scroll;
+}
+
+.teamview-menu .player-section .player-zone p{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 160px;
+}
+
+.teamview-menu .player-section .player-zone .title-position{
+    background-color:darkgrey;
+    text-align:center;
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    color: black;
+    width: 100%;
+    padding: 7.5px 0px 7.5px 0px;
+}
+
+.teamview-menu .player-section .player-zone div div.player{
+    background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(10,172,15,1) 100%);
+    transition: opacity linear 0.2s;
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+    cursor: pointer;
+}
+
+.teamview-menu .player-section .player-zone div div.player:hover{
+    opacity: 0.875;
+}
+
+.teamview-menu .player-section .player-zone div div.options-player{
+    background-color: palegreen;
+    text-align: center;
+    padding: 15px 0px 15px 0px;
+}
+
+.teamview-menu .player-section .player-zone div div.options-player button{
+    background-color: black;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 1px solid white;
+    width: 39%;
+    margin: 0px 5% 0px 5%;
+    transition: background-color linear 0.15s;
+    cursor: pointer;
+}
+
+.teamview-menu .player-section .player-zone div div.options-player button:hover{
+    background-color: #53B12D;
+}
+
+.contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+    height: 630px;
+}
+
+@media (max-width: 1630px){
+
+    .teamview-menu .player-section {
+        height: 520px;
+    }
+
+    .team-section div.image-team img {
+        height: 270px;
+    }
+
+    .teamview-menu .player-section .player-zone {
+        height: 440px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 600px;
+    }
+}
+
+@media (max-width: 1470px) {
+
+    .team-section div.image-team img {
+        height: 240px;
+    }
+
+    .teamview-menu .player-section {
+        height: 490px;
+    }
+
+    .teamview-menu .player-section .player-zone {
+        height: 410px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 570px;
+    }
+    
+}
+
+@media (max-width: 1210px) {
+
+    .team-section div.image-team img {
+        height: 200px;
+    }
+
+    .teamview-menu .player-section {
+        height: 450px;
+    }
+
+    .teamview-menu .player-section .player-zone {
+        height: 370px;
+    }
+
+    .contenedor-pagina {
+        height: 520px;
+    }
+
+    .newteam-container button {
+        margin-top: 50px;
+    }
+
+    .newteam-container .info-newteam {
+        font-size: 30px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 530px;
+    }
+}
+
+@media (max-width: 1015px){
+    .teamview-menu .team-section {
+        width: 40%;
+        text-align: center;
+    }
+
+    .team-section div.image-team img {
+        width: 65%;
+    }
+}
+
+@media (max-width: 930px) {
+
+    .team-section div.image-team img {
+        height: 170px;
+        width: 80%;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 500px;
+    }
+
+    .teamview-menu .player-section .player-zone {
+        height: 340px;
+    }
+
+    .teamview-menu .player-section {
+        height: 420px;
+    }
+
+}
+
+@media (max-width: 790px) {
+
+    .newteam-container button {
+        width: 50%;
+    }
+
+}
+
+@media (max-width: 760px) {
+
+    .team-section div.image-team img {
+        width: 80%;
+        height: 400px;
+    }
+
+    .teamview-menu .team-section {
+        width: 90%;
+        text-align: center;
+        max-height: 10000px;
+    }
+
+    .team-section select {
+        width: 100%;
+    }
+
+    .teamview-menu {
+        display: block;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 1500px;
+    }
+
+    .team-section div.image-team {
+        margin: 30px 0px 30px 0px;
+    }
+
+    .teamview-menu .player-section {
+        margin-top: 30px;
+        width: 90%;
+        max-height: 1000px;
+        height: 700px;
+    }
+
+    .teamview-menu .player-section .player-zone {
+        height: 620px;
+    }
+}
+
+@media (max-width: 570px) {
+
+    .newteam-container button {
+        width: 50%;
+        margin-top: 50px;
+    }
+
+    .team-section div.image-team img {
+        height: 300px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 1400px;
+    }
+
+    .newteam-container .info-newteam {
+        font-size: 27px;
+    }
+}
+
+@media (max-width: 470px) {
+
+    .newteam-container button {
+        margin-top: 50px;
+        width: 80%;
+        font-size: 20px;
+    }
+
+    .newteam-container .info-newteam {
+        font-size: 20px;
+    }
+
+    .teamview-menu .player-section .player-zone div div.options-player button {
+        font-size: 10px;
+    }
+
+    .team-section div.image-team img {
+        height: 220px;
+    }
+
+    .contenedor-pagina:has(main .teamview-menu .link-team-actions) {
+        height: 1320px;
+    }
+}

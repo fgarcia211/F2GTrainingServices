@@ -1,0 +1,62 @@
+﻿@model List<Equipo>
+
+@section CSSLinks{
+    <link rel="stylesheet" href="~/css/menuequipo.css" asp-append-version="true" />
+}
+
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function() {
+            esconderEquipos();         
+        });
+    </script>
+    <script src="~/js/menuequipo.js" asp-append-version="true"></script>
+}
+
+<div class="teamview-menu">
+
+    <div class="team-section">
+        @if (Model != null)
+        {
+            //Cambiar valor de equipo (TODO EL EQUIPO) - OPCIONAL
+            <input type="hidden" id="equiposeleccionado" value="@Model[0].IdEquipo"/>
+            <p>Selección de equipo</p>
+            <select id="selectorequipo" onchange="esconderEquipos()">
+                @foreach (Equipo equipo in Model)
+                {
+                    <option value="@equipo.IdEquipo">@equipo.Nombre</option>
+                }
+            </select>
+            <div id="datosequipo"></div>
+        }
+        else
+        {
+            <div class="newteam-container">
+                <p class="info-newteam">PARA PODER USAR LA APLICACION NECESITAS REGISTRAR EQUIPOS</p>
+                <p class="info-newteam">TODAVIA NO HAS CREADO NINGUN EQUIPO. PULSA PARA CREAR UN NUEVO EQUIPO</p>
+                <button onclick="location.href='@Url.Action("CrearEquipo", "Equipos", new {})'">NUEVO EQUIPO</button>
+            </div>   
+        }
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="player-section">
+            <div class="border-section"></div>
+            <!--DENTRO DE PLAYER-ZONE SE CREAN TODOS LOS JUGADORES DE ESE EQUIPO-->
+            <div id="datosjugadores" class="player-zone">
+                
+            </div>
+            <div class="border-section"></div>
+        </div>
+    }
+
+</div>
+

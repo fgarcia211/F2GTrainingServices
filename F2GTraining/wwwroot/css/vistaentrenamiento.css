@@ -1,0 +1,248 @@
+﻿.session-info-view {
+    display: flex;
+    width: 100%;
+    margin: 20px 0px 20px 0px;
+}
+
+.session-info-view .player-section {
+    width: 55%;
+    height: 550px;
+}
+
+.session-info-view .player-section .player-title {
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(140,125,84,1) 100%);
+    padding: 20px 0px 20px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-title p{
+    text-align:center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.session-info-view .player-section .player-site {
+    height: 445px;
+    background-color: #FFDDA4;
+    border: 1px solid white;
+    overflow-y: scroll;
+}
+
+.session-info-view .player-section .player-site::-webkit-scrollbar {
+    display: none;
+}
+
+.session-info-view .player-section .player-site .player {
+    background: linear-gradient(0deg, rgba(47,42,36,1) 0%, rgba(224,201,139,1) 100%);
+    display: flex;
+    padding: 10px 0px 10px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-site .player p{
+    width: 80%;
+    margin-left: 5%;
+}
+
+.session-info-view .player-section .player-site .player input[type="checkbox"] {
+    width: 20px;
+    margin-right: 3%;
+    margin-left: 3%;
+    appearance: none;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-site .player input[type="checkbox"]:checked {
+    background-color: #4A3D30;
+}
+
+.player-border {
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(140,125,84,1) 100%);
+    padding: 20px 0px 20px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-site .player-started {
+    background: linear-gradient(0deg, rgba(47,42,36,1) 0%, rgba(224,201,139,1) 100%);
+    padding: 10px 0px 10px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .player-section .player-site .player-started p{
+    text-align: center;
+}
+
+.session-info-view .player-section .player-site .player-stats {
+    background-color: #FFECDA;
+    padding: 10px 0px 10px 0px;
+    border: 1px solid white;
+    color: black;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input{
+    display: flex;
+    font-size: 14px;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone{
+    width:28%;
+    margin: 2px 2% 2px 2%;
+    text-align: center;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone select{
+    width: 40px;
+}
+
+.session-info-view .player-section .player-site .player-stats .triple-input .input-zone input:disabled {
+    width: 35px;
+    border: 1px solid white;
+    background: linear-gradient(0deg, rgba(47,42,36,1) 0%, rgba(224,201,139,1) 100%);
+    color: white;
+    text-align: center;
+    text-indent: 5px;
+}
+
+
+.session-info-view .session-section {
+    width: 45%;
+    height: 550px;
+}
+
+.session-info-view .session-section .session-title {
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(84,226,237,1) 100%);
+    padding: 24.75px 0px 24.75px 0px;
+    border: 1px solid white;
+}
+
+.session-info-view .session-section .session-title p{
+    text-align:center;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0px 2% 0px 2%;
+}
+
+.session-info-view .session-section .session-site {
+    height: 445px;
+    background-color: #45BAC1;
+    border: 1px solid white;
+}
+
+.session-info-view .session-section .session-site .session-buttons{
+    width: 90%;
+    margin: 20px 5% 10px 5%;
+}
+
+.session-info-view .session-section .session-site .session-buttons button{
+    width: 100%;
+    border: 1px solid white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 100px;
+    padding: 15px;
+    color: white;
+    background-color: #1B5D6B;
+    transition: background-color 0.4s;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.session-info-view .session-section .session-site .session-buttons button:hover{
+    background-color: #85DAEC;
+    border: 1px solid black;
+    color: #1B5D6B;
+}
+
+.session-info-view .session-section .session-info {
+    height: 100px;
+    border: 1px solid white;
+    width: 90%;
+    color: white;
+    margin: 0px 5% 30px 5%;
+    font-size: 18px;
+    text-align: center;
+}
+
+.session-info-view .session-section .session-info p{
+    margin: 20px 5% 20px 5%;
+}
+
+.session-info-view .session-section .session-timer {
+    height: 100px;
+    background-color: white;
+    border: 1px solid black;
+    width: 90%;
+    color: #1B5D6B;
+    margin: 20px 5% 20px 5%;
+    font-size: 90px;
+    text-align: center;
+}
+
+.session-info-view .session-section .session-border {
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(84,226,237,1) 100%);
+    padding: 20px 0px 20px 0px;
+    border: 1px solid white;
+}
+
+.swal2-popup {
+    border: 6px solid #45BAC1 !important;
+    background-color: black !important;
+    color: white !important;
+}
+
+.swal2-confirm {
+    background-color: #45BAC1 !important;
+    border: 2px solid white !important;
+    width: 100%;
+}
+
+.swal2-container {
+    height: 810px !important;
+}
+
+.swal2-actions {
+    border: none !important;
+}
+
+@media (max-width: 1030px){
+
+    .session-info-view {
+        display: block;
+    }
+
+    .session-info-view .session-section {
+        margin-top: 50px;
+        width: 100%;
+    }
+
+    .session-info-view .player-section {
+        width: 100%;
+        height: 550px;
+    }
+
+    .contenedor-pagina {
+        height: 1250px;
+    }
+
+    .session-info-view .session-section .session-timer {
+        font-size: 78px;
+    }
+
+    .swal2-popup {
+        width: 90% !important;
+    }
+
+    .swal2-container {
+        height: 1450px !important;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .session-info-view .player-section .player-site .player-stats .triple-input {
+        font-size: 10px;
+    }
+}
+

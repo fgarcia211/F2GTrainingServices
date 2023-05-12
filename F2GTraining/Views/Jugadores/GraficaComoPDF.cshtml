@@ -1,0 +1,115 @@
+﻿@model PDFJugador
+
+@{
+    Layout = null;
+
+    Usuario user = Context.Session.GetObject<Usuario>("USUARIO");
+    EstadisticaJugador stats = Model.Estadisticas;
+
+    List<string> etiquetas = new List<string>();
+    List<int> valores = new List<int>();
+
+    float tiroparada = (stats.TiroGKParada != null && stats.TotalTiroGKParada != null) ? stats.TiroGKParada.Value / stats.TotalTiroGKParada.Value : 0;
+    float pasesaque = (stats.PaseGKSaque != null && stats.TotalPaseGKSaque != null) ? stats.PaseGKSaque.Value / stats.TotalPaseGKSaque.Value : 0;
+    float regatereflejo = (stats.RegateGKReflejo != null && stats.TotalRegateGKReflejo != null) ? stats.RegateGKReflejo.Value / stats.TotalRegateGKReflejo.Value : 0;
+    float defensavelocidad = (stats.DefensaGKVelocidad != null && stats.TotalDefensaGKVelocidad != null) ? stats.DefensaGKVelocidad.Value / stats.TotalDefensaGKVelocidad.Value : 0;
+    float ritmosalto = (stats.RitmoGKSalto != null && stats.TotalRitmoGKSalto != null) ? stats.RitmoGKSalto.Value / stats.TotalRitmoGKSalto.Value : 0;
+    float fisicoposicion = (stats.FisicoGKPosicion != null && stats.TotalFisicoGKPosicion != null) ? stats.FisicoGKPosicion.Value / stats.TotalFisicoGKPosicion.Value : 0;
+}
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FUT TRAINING F2G</title>
+        <link rel="stylesheet" href="~/css/baseaplicacion.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/graficapdf.css" asp-append-version="true" />
+        <script src="~/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+        <script src="~/js/highcharts.js"></script>
+        <script src="~/js/graficapdf.js" asp-append-version="true"></script>
+    </head>
+    <body>
+        <div class="pdf-zone">
+            <div class="player-title">
+                <h2>JUGADOR: @Model.Jugador.Nombre</h2>
+            </div>
+            <div class="image-team">
+                <img src="~/images/equipos/@Model.EquipoJugador.Imagen"/>
+            </div>
+            <div class="player-stats">
+                <h1>ESTADISTICAS DEL JUGADOR</h1>
+                <div class="triple-input">
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>RITMO:</label>
+                        }
+                        else
+                        {
+                            <label>SALTO:</label>
+                        }
+                        <p>@ritmosalto</p>
+                    </div>
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>TIRO:</label>
+                        }
+                        else
+                        {
+                            <label>PARADA:</label>
+                        }
+                        <p>@tiroparada</p>
+                    </div>
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>PASE:</label>
+                        }
+                        else
+                        {
+                            <label>SAQUE:</label>
+                        }
+                        <p>@pasesaque</p>
+                    </div>
+                </div>
+                <div class="triple-input">
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>REGATE:</label>
+                        }
+                        else
+                        {
+                            <label>REFLEJO:</label>
+                        }
+                        <p>@regatereflejo</p>
+                    </div>
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>DEFENSA:</label>
+                        }
+                        else
+                        {
+                            <label>REACCION:</label>
+                        }
+                        <p>@defensavelocidad</p>
+                    </div>
+                    <div class="input-zone">
+                        @if (Model.Jugador.IdPosicion != 1)
+                        {
+                            <label>FISICO:</label>
+                        }
+                        else
+                        {
+                            <label>POSICION:</label>
+                        }
+                        <p>@fisicoposicion</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-pdf"></div>
+        </div>
+    </body>
+</html>
