@@ -42,7 +42,7 @@
                     
                 </div>
                 <div class="session-options" id="sessionopt-@entre.Id">
-                    @if (entre.FechaFin == null)
+                    @if (entre.FechaFin == null && entre.FechaInicio == null)
                     {
                         <button onclick="location.href='@Url.Action("VistaEntrenamiento", "Entrenamientos", new { identrenamiento = entre.Id, idequipo = entre.IdEquipo })'">VER SESION</button>
                         <button onclick="location.href='@Url.Action("EliminaEntrenamiento", "Entrenamientos", new { identrenamiento = entre.Id, idequipo = entre.IdEquipo })'">BORRAR SESION</button>

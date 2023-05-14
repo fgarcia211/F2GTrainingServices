@@ -1,5 +1,5 @@
+using Azure.Storage.Blobs;
 using F2GTraining.Data;
-using F2GTraining.Helpers;
 using F2GTraining.Repositories;
 using F2GTraining.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+string azureKeys = builder.Configuration.GetValue<string>("ServicesAzure:StorageKey");
+
+BlobServiceClient blobServiceClient = new BlobServiceClient(azureKeys);
+builder.Services.AddTransient<BlobServiceClient>(x => blobServiceClient);
+builder.Services.AddTransient<ServiceStorageBlobs>();
+
 builder.Services.AddTransient<ServiceAPIF2GTraining>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -18,8 +25,6 @@ builder.Services.AddSession(options =>
 //BASE DE DATOS
 string connectionString = builder.Configuration.GetConnectionString("databaseAzure");
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<HelperRutasProvider>();
-builder.Services.AddSingleton<HelperSubirFicheros>();
 builder.Services.AddTransient<IRepositoryF2GTraining, RepositoryF2GTraining>();
 builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 

@@ -1,7 +1,7 @@
 ﻿@model Equipo
 
 <div class="image-team" id="teamimage-@Model.IdEquipo">
-    <img src="~/images/equipos/@Model.Imagen" />
+    <img src="@Model.Imagen" />
 </div>
 <div class="link-team-actions" id="teamaction-@Model.IdEquipo">
     <a asp-controller="Entrenamientos" asp-action="ListaSesiones" asp-route-idequipo="@Model.IdEquipo" class="minibutton-teamview">SESIONES DE ENTRENAMIENTO</a>

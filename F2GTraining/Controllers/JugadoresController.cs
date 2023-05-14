@@ -1,27 +1,28 @@
 ﻿using F2GTraining.Extensions;
 using F2GTraining.Filters;
 using ModelsF2GTraining;
-using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
+using F2GTraining.Services;
 
 namespace F2GTraining.Controllers
 {
     public class JugadoresController : Controller
     {
-        private IRepositoryF2GTraining repo;
+        private ServiceAPIF2GTraining service;
 
-        public JugadoresController(IRepositoryF2GTraining repo)
+        public JugadoresController(ServiceAPIF2GTraining service)
         {
-            this.repo = repo;
+            this.service = service;
         }
 
         [AuthorizeUsers]
-        public IActionResult CrearJugador(int idequipo)
+        public async Task<IActionResult> CrearJugador(int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
 
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -31,7 +32,7 @@ namespace F2GTraining.Controllers
             {
                 ViewData["IDEQUIPO"] = equipo.IdEquipo;
                 ViewData["NOMBRE"] = equipo.Nombre;
-                return View(this.repo.GetPosiciones());
+                return View(await this.service.GetPosiciones());
             }
 
         }
@@ -41,12 +42,24 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> CrearJugador(int idequipo, int idposicion, string nombre, int dorsal, int edad, int peso, int altura)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
 
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo != null || equipo.IdUsuario == idusuario)
             {
-                await this.repo.InsertJugador(idequipo, idposicion, nombre, dorsal, edad, peso, altura);
+                Jugador jug = new Jugador
+                {
+                    IdEquipo = idequipo,
+                    IdPosicion = idposicion,
+                    Nombre = nombre,
+                    Dorsal = dorsal,
+                    Edad = edad,
+                    Peso = peso,
+                    Altura = altura
+                };
+
+                await this.service.InsertJugador(token, jug);
             }
 
             return RedirectToAction("MenuEquipo", "Equipos");
@@ -56,12 +69,17 @@ namespace F2GTraining.Controllers
         [AuthorizeUsers]
         public async Task<IActionResult> DeleteJugador(int idjugador)
         {
-            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            List<Jugador> jugadoresUser = this.repo.JugadoresXUsuario(idusuario);
+            string token = HttpContext.Session.GetString("TOKEN");
 
-            if (jugadoresUser.Contains(this.repo.GetJugadorID(idjugador)))
+            List<Jugador> jugadoresUser = await this.service.GetJugadoresUsuario(token);
+            Jugador jugBorrar = await this.service.GetJugadorID(token, idjugador);
+
+            foreach (Jugador jugador in jugadoresUser)
             {
-                await this.repo.DeleteJugador(idjugador);
+                if (jugador.IdJugador == jugBorrar.IdJugador)
+                {
+                    await this.service.DeleteJugador(token, idjugador);
+                }
             }
 
             return RedirectToAction("MenuEquipo", "Equipos");
@@ -69,60 +87,59 @@ namespace F2GTraining.Controllers
         }
 
         [AuthorizeUsers]
-        public IActionResult GraficaJugador(int idjugador)
+        public async Task<IActionResult> GraficaJugador(int idjugador)
         {
-            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            List<Jugador> jugadoresUser = this.repo.JugadoresXUsuario(idusuario);
-            Jugador jugMostrar = this.repo.GetJugadorID(idjugador);
+            string token = HttpContext.Session.GetString("TOKEN");
 
-            if (jugadoresUser.Contains(jugMostrar))
+            List<Jugador> jugadoresUser = await this.service.GetJugadoresUsuario(token);
+            Jugador jugMostrar = await this.service.GetJugadorID(token,idjugador);
+
+            foreach (Jugador jugador in jugadoresUser)
             {
-                EstadisticaJugador stats = this.repo.GetEstadisticasJugador(idjugador);
-                ViewData["ESTADISTICAS"] = stats;
-                return View(jugMostrar);
-                /*return new ViewAsPdf
+                if (jugador.IdJugador == jugMostrar.IdJugador)
                 {
-                    Model = jugMostrar
-                };*/
+                    EstadisticaJugador stats = await this.service.GetEstadisticasJugador(token, idjugador);
+                    ViewData["ESTADISTICAS"] = stats;
+                    return View(jugMostrar);
+                }
             }
-            else
-            {
-                return RedirectToAction("MenuEquipo", "Equipos");
-            }
+            
+            return RedirectToAction("MenuEquipo", "Equipos");
 
         }
 
         [AuthorizeUsers]
-        public IActionResult _PartialJugadoresEquipo(int idequipo)
+        public async Task<IActionResult> _PartialJugadoresEquipo(int idequipo)
         {
-            return PartialView(this.repo.GetJugadoresEquipo(idequipo));
+            string token = HttpContext.Session.GetString("TOKEN");
+            return PartialView(await this.service.GetJugadoresEquipo(token,idequipo));
         }
 
-        public IActionResult GraficaComoPDF(int idjugador)
+        public async Task<IActionResult> GraficaComoPDF(int idjugador)
         {
-            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
 
-            List<Jugador> jugadoresUser = this.repo.JugadoresXUsuario(idusuario);
-            Jugador jug = this.repo.GetJugadorID(idjugador);
+            List<Jugador> jugadoresUser = await this.service.GetJugadoresUsuario(token);
+            Jugador jugGrafica = await this.service.GetJugadorID(token,idjugador);
 
-            if (jugadoresUser.Contains(jug))
+            foreach (Jugador jugador in jugadoresUser)
             {
-                Equipo equipo = this.repo.GetEquipo(jug.IdEquipo);
-                EstadisticaJugador stats = this.repo.GetEstadisticasJugador(idjugador);
-                PDFJugador modeloPDF = new PDFJugador
+                if (jugador.IdJugador == jugGrafica.IdJugador)
                 {
-                    Jugador = jug,
-                    Estadisticas = stats,
-                    EquipoJugador = equipo
-                };
+                    Equipo equipo = await this.service.GetEquipo(token, jugGrafica.IdEquipo);
+                    EstadisticaJugador stats = await this.service.GetEstadisticasJugador(token, idjugador);
+                    PDFJugador modeloPDF = new PDFJugador
+                    {
+                        Jugador = jugGrafica,
+                        Estadisticas = stats,
+                        EquipoJugador = equipo
+                    };
 
-                return new ViewAsPdf(modeloPDF);
+                    return new ViewAsPdf(modeloPDF);
+                }
             }
-            else
-            {
-                return RedirectToAction("MenuEquipo", "Equipos");
-            }
-            
+
+            return RedirectToAction("MenuEquipo", "Equipos");        
         }
     }
 }

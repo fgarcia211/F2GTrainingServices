@@ -1,25 +1,27 @@
 ﻿using F2GTraining.Extensions;
 using F2GTraining.Filters;
 using ModelsF2GTraining;
-using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using F2GTraining.Services;
 
 namespace F2GTraining.Controllers
 {
     public class EntrenamientosController : Controller
     {
-        private IRepositoryF2GTraining repo;
+        private ServiceAPIF2GTraining service;
 
-        public EntrenamientosController(IRepositoryF2GTraining repo)
+        public EntrenamientosController(ServiceAPIF2GTraining service)
         {
-            this.repo = repo;
+            this.service = service;
         }
 
         [AuthorizeUsers]
-        public IActionResult ListaSesiones(int idequipo)
+        public async Task<IActionResult> ListaSesiones(int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            string token = HttpContext.Session.GetString("TOKEN");
+
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -29,7 +31,7 @@ namespace F2GTraining.Controllers
             {
                 ViewData["IDEQUIPO"] = idequipo;
                 ViewData["NOMBREEQUIPO"] = equipo.Nombre;
-                return View(this.repo.GetEntrenamientosEquipo(idequipo));
+                return View(await this.service.GetEntrenamientosEquipo(token,idequipo));
             }
 
         }
@@ -39,7 +41,9 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> ListaSesiones(int idequipo, string nombre)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            string token = HttpContext.Session.GetString("TOKEN");
+
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -47,7 +51,7 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                await this.repo.InsertEntrenamiento(idequipo, nombre);
+                await this.service.InsertEntrenamiento(token,idequipo, nombre);
                 return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
             }
 
@@ -57,7 +61,9 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> EliminaEntrenamiento(int identrenamiento, int idequipo)
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            string token = HttpContext.Session.GetString("TOKEN");
+
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
@@ -65,39 +71,41 @@ namespace F2GTraining.Controllers
             }
             else
             {
-                await this.repo.BorrarEntrenamiento(identrenamiento);
+                await this.service.DeleteEntrenamiento(token,identrenamiento);
                 return RedirectToAction("ListaSesiones", new { idequipo = idequipo });
             }
 
         }
 
         [AuthorizeUsers]
-        public IActionResult VistaEntrenamiento(int identrenamiento, int idequipo)
+        public async Task<IActionResult> VistaEntrenamiento(int identrenamiento, int idequipo)
         {
-            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
+
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            Entrenamiento entrena = this.repo.GetEntrenamiento(identrenamiento);
+            Entrenamiento entrena = await this.service.GetEntrenamiento(token,identrenamiento);
             List<Jugador> jugadoresequipo;
 
             if (entrena.Activo == false && entrena.FechaFin == null)
             {
-                jugadoresequipo = this.repo.GetJugadoresEquipo(idequipo);
+                jugadoresequipo = await this.service.GetJugadoresEquipo(token,idequipo);
             }
             else if (entrena.Activo == false && entrena.FechaFin != null)
             {
-                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
-                List<JugadorEntrenamiento> notas = this.repo.GetNotasSesion(identrenamiento);
+                jugadoresequipo = await this.service.GetJugadoresXSesion(token,identrenamiento);
+                List<JugadorEntrenamiento> notas = await this.service.GetNotasSesion(token,identrenamiento);
                 ViewData["NOTAS"] = notas;
             }
             else
             {
-                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = await this.service.GetJugadoresXSesion(token,identrenamiento);
             }
             
             ViewData["JUGADORES"] = jugadoresequipo;
@@ -111,35 +119,32 @@ namespace F2GTraining.Controllers
         [HttpPost]
         public async Task<IActionResult> VistaEntrenamiento(int identrenamiento, int idequipo, List<int> seleccionados, List<int> valoraciones)
         {
-            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString()); 
-            Equipo equipo = this.repo.GetEquipo(idequipo);
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
+
+            Equipo equipo = await this.service.GetEquipo(token,idequipo);
 
             if (equipo == null || equipo.IdUsuario != idusuario)
             {
                 return RedirectToAction("MenuEquipo", "Equipos");
             }
 
-            Entrenamiento entrena = this.repo.GetEntrenamiento(identrenamiento);
+            Entrenamiento entrena = await this.service.GetEntrenamiento(token,identrenamiento);
             List<Jugador> jugadoresequipo;
 
             if (entrena.Activo == false)
             {
                 //AQUI VA EL CODIGO PARA AÑADIRLO A LA AUXILIAR DE ENTRENAMIENTOJUGADOR
-                await this.repo.AniadirJugadoresSesion(seleccionados, identrenamiento);
-                //AQUI VA EL CODIGO PARA QUE LA SESION SE INICIE
-                await this.repo.EmpezarEntrenamiento(identrenamiento);
-
-                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
+                await this.service.AniadirJugadoresSesion(token,identrenamiento,seleccionados);
+                jugadoresequipo = await this.service.GetJugadoresXSesion(token,identrenamiento);
             }
             else 
             {
-                jugadoresequipo = this.repo.JugadoresXSesion(identrenamiento);
+                jugadoresequipo = await this.service.GetJugadoresXSesion(token,identrenamiento);
                 //AQUI HAY QUE HACER PROCEDURE PARA ASIGNAR NOTAS A CADA JUGADOR APUNTADO
-                await this.repo.AniadirPuntuacionesEntrenamiento(seleccionados, valoraciones, identrenamiento);
-                //AQUI VA EL CODIGO PARA QUE LA SESION SE ACABE
-                await this.repo.FinalizarEntrenamiento(identrenamiento);
+                await this.service.AniadirPuntuacionesEntrenamiento(token, identrenamiento, seleccionados, valoraciones);
 
-                List<JugadorEntrenamiento> notas = this.repo.GetNotasSesion(identrenamiento);
+                List<JugadorEntrenamiento> notas = await this.service.GetNotasSesion(token,identrenamiento);
                 ViewData["NOTAS"] = notas;
             }
 
