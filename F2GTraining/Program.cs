@@ -1,6 +1,4 @@
 using Azure.Storage.Blobs;
-using F2GTraining.Data;
-using F2GTraining.Repositories;
 using F2GTraining.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +21,7 @@ builder.Services.AddSession(options =>
 });
 
 //BASE DE DATOS
-string connectionString = builder.Configuration.GetConnectionString("databaseAzure");
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<IRepositoryF2GTraining, RepositoryF2GTraining>();
-builder.Services.AddDbContext<F2GDataBaseContext>(options => options.UseSqlServer(connectionString));
 
 //SEGURIDAD
 builder.Services.AddAuthentication(options =>

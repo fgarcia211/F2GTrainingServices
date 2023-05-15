@@ -1,7 +1,6 @@
 ﻿using F2GTraining.Extensions;
 using F2GTraining.Filters;
 using ModelsF2GTraining;
-using F2GTraining.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -117,10 +116,12 @@ namespace F2GTraining.Controllers
             {
                 await this.service.InsertUsuario(new Usuario
                 {
+                    IdUsuario = 0,
                     Nombre = usuario,
                     Contrasenia = contrasenha,
                     Correo = correo,
-                    Telefono = telefono
+                    Telefono = telefono,
+                    Token = "SIN TOKEN"
                 });
                 TempData["MENSAJE"] = "Usuario registrado correctamente";
                 return RedirectToAction("InicioSesion");
