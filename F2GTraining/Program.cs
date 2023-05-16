@@ -1,13 +1,23 @@
+using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using F2GTraining.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-string azureKeys = builder.Configuration.GetValue<string>("ServicesAzure:StorageKey");
+builder.Services.AddAzureClients(factory =>
+{
+    factory.AddSecretClient(builder.Configuration.GetSection("KeyVault"));
+});
+
+SecretClient secretClient = builder.Services.BuildServiceProvider().GetService<SecretClient>();
+KeyVaultSecret keyVaultSecret = await secretClient.GetSecretAsync("StorageAzure");
+
+string azureKeys = keyVaultSecret.Value;
 
 BlobServiceClient blobServiceClient = new BlobServiceClient(azureKeys);
 builder.Services.AddTransient<BlobServiceClient>(x => blobServiceClient);
