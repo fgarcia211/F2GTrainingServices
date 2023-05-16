@@ -1,8 +1,10 @@
-﻿function iniciarEntrenamiento(fecha) {
+﻿function iniciarEntrenamiento(fecha, fechahoy) {
 
-    var diferenciaSeg = Math.trunc((new Date() - new Date(fecha[0], fecha[1] - 1, fecha[2], fecha[3], fecha[4], fecha[5])) / 1000) - 7208;
+    var diferenciaSeg = Math.trunc(new Date(fechahoy[0], fechahoy[1] - 1, fechahoy[2], fechahoy[3], fechahoy[4], fechahoy[5]) - new Date(fecha[0], fecha[1] - 1, fecha[2], fecha[3], fecha[4], fecha[5])) / 1000;
+    diferenciaSeg = diferenciaSeg - 7192
     calculaTemporizador(diferenciaSeg);
-    $(".session-timer p").css("color","#2DCFF1")
+    console.log(diferenciaSeg);
+    $(".session-timer p").css("color", "#2DCFF1");
 
     setInterval(function () {
         diferenciaSeg++;

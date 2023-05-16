@@ -54,6 +54,15 @@
                         @Model.FechaInicio.Value.Minute,
                         @Model.FechaInicio.Value.Second,
                         @Model.FechaInicio.Value.Millisecond
+                    ],
+                    [
+                        @DateTimeOffset.Now.Year,
+                        @DateTimeOffset.Now.Month,
+                        @DateTimeOffset.Now.Day,
+                        @DateTimeOffset.Now.Hour,
+                        @DateTimeOffset.Now.Minute,
+                        @DateTimeOffset.Now.Second,
+                        @DateTimeOffset.Now.Millisecond,
                     ]
                 );
             });
