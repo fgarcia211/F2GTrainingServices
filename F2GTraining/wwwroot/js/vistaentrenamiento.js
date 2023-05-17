@@ -1,6 +1,7 @@
 ﻿function iniciarEntrenamiento(fecha, fechahoy) {
 
-    var diferenciaSeg = Math.trunc(new Date(fechahoy[0], fechahoy[1] - 1, fechahoy[2], fechahoy[3], fechahoy[4], fechahoy[5]) - new Date(fecha[0], fecha[1] - 1, fecha[2], fecha[3], fecha[4], fecha[5])) / 1000;
+    //SE SUMAN 7208SEG POR LA DIFERENCIA DE AZURE
+    var diferenciaSeg = (Math.trunc(new Date(fechahoy[0], fechahoy[1] - 1, fechahoy[2], fechahoy[3], fechahoy[4], fechahoy[5]) - new Date(fecha[0], fecha[1] - 1, fecha[2], fecha[3], fecha[4], fecha[5])) / 1000);
     
     calculaTemporizador(diferenciaSeg);
     console.log(diferenciaSeg);

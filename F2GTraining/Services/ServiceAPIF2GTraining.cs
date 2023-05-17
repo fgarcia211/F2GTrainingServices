@@ -303,7 +303,10 @@ namespace F2GTraining.Services
         public async Task<List<Entrenamiento>> GetEntrenamientosEquipo(string token, int idequipo)
         {
             string request = "/api/Entrenamientos/GetEntrenamientosEquipo/" + idequipo;
-            return await this.CallApiAsync<List<Entrenamiento>>(request, token);
+            List<Entrenamiento> entrenamientos = await this.CallApiAsync<List<Entrenamiento>>(request, token);
+            entrenamientos.Reverse();
+
+            return entrenamientos;
         }
 
         public async Task<Entrenamiento> GetEntrenamiento(string token, int identrena)
